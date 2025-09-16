@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 30px;
+}
+h1 {
+    color: #333;
+}
+.botones-menu {
+    margin-bottom: 20px;
+}
+button {
+    margin: 5px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    background: #e3e3e3;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background: #d1d1d1;
+}
+.panel {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #ddd;
+}
+label {
+    display: inline-block;
+    width: 100px;
+    margin-top: 10px;
+}
+input[type="text"], input[type="password"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 180px;
+}

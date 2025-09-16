@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ABM Usuarios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Gestión de Usuarios</h1>
+    <div class="botones-menu">
+        <button id="btnAñadir">Añadir</button>
+        <button id="btnModificar">Modificar</button>
+        <button id="btnEliminar">Eliminar</button>
+        <button id="btnVolver">Volver</button>
+    </div>
+
+    <!-- Panel Añadir Usuario -->
+    <div id="panelAñadir" class="panel" style="display:none;">
+        <h2>Alta de Usuario</h2>
+        <label for="dniAñadir">DNI:</label>
+        <input type="text" id="dniAñadir"><br>
+        <label for="nombreAñadir">Nombre:</label>
+        <input type="text" id="nombreAñadir"><br>
+        <label for="apellidoAñadir">Apellido:</label>
+        <input type="text" id="apellidoAñadir"><br>
+        <label for="passwordAñadir">Password:</label>
+        <input type="password" id="passwordAñadir"><br>
+        <button onclick="cerrarPanel('panelAñadir')">Cerrar</button>
+        <button id="btnConfirmarAñadir">Añadir Usuario</button>
+    </div>
+
+    <!-- Panel Eliminar Usuario -->
+    <div id="panelEliminar" class="panel" style="display:none;">
+        <h2>Eliminar Usuario</h2>
+        <label for="dniEliminar">DNI:</label>
+        <input type="text" id="dniEliminar"><br>
+        <button onclick="cerrarPanel('panelEliminar')">Cerrar</button>
+        <button id="btnConfirmarEliminar">Eliminar Definitivo</button>
+    </div>
+
+    <!-- Panel Modificar Usuario -->
+    <div id="panelModificar" class="panel" style="display:none;">
+        <h2>Modificar Usuario</h2>
+        <label for="dniModificar">DNI:</label>
+        <input type="text" id="dniModificar"><br>
+        <button id="btnBuscarModificar">Buscar</button>
+        <div id="datosModificar" style="display:none;">
+            <label for="nombreModificar">Nombre:</label>
+            <input type="text" id="nombreModificar"><br>
+            <label for="apellidoModificar">Apellido:</label>
+            <input type="text" id="apellidoModificar"><br>
+            <label for="passwordModificar">Password:</label>
+            <input type="password" id="passwordModificar"><br>
+            <button id="btnConfirmarModificar">Guardar Cambios</button>
+        </div>
+        <button onclick="cerrarPanel('panelModificar')">Cerrar</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
