@@ -1,36 +1,57 @@
+// Si subís la imagen, la mostramos
+window.onload = function() {
+    const img = document.getElementById('banco-img');
+    fetch('banco.jpg').then(res => {
+        if (res.ok) img.style.display = 'block';
+    });
+};
+
 function cerrarPanel(panelId) {
     document.getElementById(panelId).style.display = 'none';
 }
 
-function ocultarTodosLosPaneles() {
-    document.getElementById('panelAñadir').style.display = 'none';
-    document.getElementById('panelEliminar').style.display = 'none';
-    document.getElementById('panelModificar').style.display = 'none';
+function ocultarTodosLosPaneles(exceptId = null) {
+    const paneles = ['panelAñadir', 'panelEliminar', 'panelModificar'];
+    paneles.forEach(id => {
+        if (id !== exceptId) document.getElementById(id).style.display = 'none';
+    });
 }
 
-// Botón Añadir
 document.getElementById('btnAñadir').onclick = function() {
-    ocultarTodosLosPaneles();
-    document.getElementById('panelAñadir').style.display = 'block';
+    const panel = document.getElementById('panelAñadir');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        ocultarTodosLosPaneles('panelAñadir');
+        panel.style.display = 'block';
+    }
 };
-// Botón Eliminar
+
 document.getElementById('btnEliminar').onclick = function() {
-    ocultarTodosLosPaneles();
-    document.getElementById('panelEliminar').style.display = 'block';
+    const panel = document.getElementById('panelEliminar');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        ocultarTodosLosPaneles('panelEliminar');
+        panel.style.display = 'block';
+    }
 };
-// Botón Modificar
+
 document.getElementById('btnModificar').onclick = function() {
-    ocultarTodosLosPaneles();
-    document.getElementById('panelModificar').style.display = 'block';
-    document.getElementById('datosModificar').style.display = 'none';
+    const panel = document.getElementById('panelModificar');
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+    } else {
+        ocultarTodosLosPaneles('panelModificar');
+        panel.style.display = 'block';
+        document.getElementById('datosModificar').style.display = 'none';
+    }
 };
-// Botón Volver (puedes simular navegación, aquí solo oculta paneles)
+
 document.getElementById('btnVolver').onclick = function() {
     ocultarTodosLosPaneles();
 };
 
-// Simulación de lógica (solo muestra mensajes, no accede a base de datos)
-// Añadir
 document.getElementById('btnConfirmarAñadir').onclick = function() {
     let dni = document.getElementById('dniAñadir').value;
     let nombre = document.getElementById('nombreAñadir').value;
@@ -42,7 +63,6 @@ document.getElementById('btnConfirmarAñadir').onclick = function() {
         return;
     }
     alert("Usuario añadido (simulado): " + nombre + " " + apellido);
-    // Limpiar campos
     document.getElementById('dniAñadir').value = '';
     document.getElementById('nombreAñadir').value = '';
     document.getElementById('apellidoAñadir').value = '';
@@ -50,7 +70,6 @@ document.getElementById('btnConfirmarAñadir').onclick = function() {
     cerrarPanel('panelAñadir');
 };
 
-// Eliminar
 document.getElementById('btnConfirmarEliminar').onclick = function() {
     let dni = document.getElementById('dniEliminar').value;
     if (!dni) {
@@ -64,14 +83,12 @@ document.getElementById('btnConfirmarEliminar').onclick = function() {
     cerrarPanel('panelEliminar');
 };
 
-// Modificar
 document.getElementById('btnBuscarModificar').onclick = function() {
     let dni = document.getElementById('dniModificar').value;
     if (!dni) {
         alert("Ingrese un DNI para buscar.");
         return;
     }
-    // Simulación: muestra los campos como si encontró el usuario
     document.getElementById('datosModificar').style.display = 'block';
     document.getElementById('nombreModificar').value = 'NombreSimulado';
     document.getElementById('apellidoModificar').value = 'ApellidoSimulado';
@@ -89,7 +106,6 @@ document.getElementById('btnConfirmarModificar').onclick = function() {
         return;
     }
     alert("Usuario modificado (simulado): " + nombre + " " + apellido);
-    // Limpiar campos
     document.getElementById('dniModificar').value = '';
     document.getElementById('nombreModificar').value = '';
     document.getElementById('apellidoModificar').value = '';
