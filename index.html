@@ -2,61 +2,100 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BANCO TAL - Gestión de Usuarios</title>
-    <link rel="stylesheet" href="style.css">
+    <title>BANCO TAL - ABM de Clientes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1 class="titulo-banco">BANCO TAL</h1>
-    </header>
-    <div class="main-content">
-        <div class="botones-menu">
-            <button id="btnAñadir">Añadir</button>
-            <button id="btnModificar">Modificar</button>
-            <button id="btnEliminar">Eliminar</button>
-            <button id="btnVolver">Volver</button>
-        </div>
-
-        <!-- Panel Añadir Usuario -->
-        <div id="panelAñadir" class="panel" style="display:none;">
-            <h2>Alta de Usuario</h2>
-            <label for="dniAñadir">DNI:</label>
-            <input type="text" id="dniAñadir"><br>
-            <label for="nombreAñadir">Nombre:</label>
-            <input type="text" id="nombreAñadir"><br>
-            <label for="apellidoAñadir">Apellido:</label>
-            <input type="text" id="apellidoAñadir"><br>
-            <label for="passwordAñadir">Password:</label>
-            <input type="password" id="passwordAñadir"><br>
-            <button onclick="cerrarPanel('panelAñadir')" class="btn-cerrar-izq">Cerrar</button>
-            <button id="btnConfirmarAñadir" class="btn-coral">Añadir Usuario</button>
-        </div>
-
-        <!-- Panel Eliminar Usuario -->
-        <div id="panelEliminar" class="panel" style="display:none;">
-            <h2>Eliminar Usuario</h2>
-            <label for="dniEliminar">DNI:</label>
-            <input type="text" id="dniEliminar"><br>
-            <button onclick="cerrarPanel('panelEliminar')" class="btn-cerrar-izq">Cerrar</button>
-            <button id="btnConfirmarEliminar" class="btn-coral">Eliminar Definitivo</button>
-        </div>
-
-        <!-- Panel Modificar Usuario -->
-        <div id="panelModificar" class="panel" style="display:none;">
-            <button onclick="cerrarPanel('panelModificar')" class="btn-cerrar-izq">Cerrar</button>
-            <h2>Modificar Usuario</h2>
-            <label for="dniModificar">DNI:</label>
-            <input type="text" id="dniModificar"><br>
-            <button id="btnBuscarModificar" class="btn-coral">Buscar</button>
-            <div id="datosModificar" style="display:none;">
-                <label for="nombreModificar">Nombre:</label>
-                <input type="text" id="nombreModificar"><br>
-                <label for="apellidoModificar">Apellido:</label>
-                <input type="text" id="apellidoModificar"><br>
-                <label for="passwordModificar">Password:</label>
-                <input type="password" id="passwordModificar"><br>
-                <button id="btnConfirmarModificar" class="btn-coral">Guardar Cambios</button>
+    <div class="container-banco">
+        <div class="panel-superior">
+            <div class="panel-header">
+                <div class="logo-area">
+                    <img src="1115389.png" alt="Banco Tal" id="logo-banco">
+                </div>
+                <div class="titulo-area">
+                    <h1>BANCO TAL</h1>
+                    <span class="subtitulo">ABM De Clientes</span>
+                </div>
             </div>
+            <div class="panel-botones">
+                <button id="btnInsertar">INSERTAR</button>
+                <button id="btnModificar">MODIFICAR</button>
+                <button id="btnEliminar">ELIMINAR</button>
+            </div>
+        </div>
+        <div class="panel-abm" id="abmPanel">
+            <!-- Panel Insertar -->
+            <div id="panelInsertar" class="panel-form" style="display:none;">
+                <div class="panel-form-header">Alta de Cliente</div>
+                <div class="panel-form-body">
+                    <div class="form-row">
+                        <label for="dniInsertar">DNI:</label>
+                        <input type="text" id="dniInsertar">
+                    </div>
+                    <div class="form-row">
+                        <label for="nombreInsertar">Nombre:</label>
+                        <input type="text" id="nombreInsertar">
+                    </div>
+                    <div class="form-row">
+                        <label for="apellidoInsertar">Apellido:</label>
+                        <input type="text" id="apellidoInsertar">
+                    </div>
+                    <div class="form-row">
+                        <label for="passwordInsertar">Password:</label>
+                        <input type="password" id="passwordInsertar">
+                    </div>
+                </div>
+                <div class="panel-form-actions">
+                    <button class="btn-coral" id="btnConfirmarInsertar">INSERTAR</button>
+                    <button class="btn-limpiar" id="btnLimpiarInsertar">Limpiar</button>
+                </div>
+            </div>
+            <!-- Panel Modificar -->
+            <div id="panelModificar" class="panel-form" style="display:none;">
+                <div class="panel-form-header">Modificar Cliente</div>
+                <div class="panel-form-body">
+                    <div class="form-row">
+                        <label for="dniModificar">DNI:</label>
+                        <input type="text" id="dniModificar">
+                    </div>
+                    <button id="btnBuscarModificar" class="btn-coral" style="margin-bottom:16px;">Buscar</button>
+                    <div id="datosModificar" style="display:none;">
+                        <div class="form-row">
+                            <label for="nombreModificar">Nombre:</label>
+                            <input type="text" id="nombreModificar">
+                        </div>
+                        <div class="form-row">
+                            <label for="apellidoModificar">Apellido:</label>
+                            <input type="text" id="apellidoModificar">
+                        </div>
+                        <div class="form-row">
+                            <label for="passwordModificar">Password:</label>
+                            <input type="password" id="passwordModificar">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-form-actions">
+                    <button class="btn-coral" id="btnConfirmarModificar">GUARDAR</button>
+                    <button class="btn-limpiar" id="btnLimpiarModificar">Limpiar</button>
+                </div>
+            </div>
+            <!-- Panel Eliminar -->
+            <div id="panelEliminar" class="panel-form" style="display:none;">
+                <div class="panel-form-header">Eliminar Cliente</div>
+                <div class="panel-form-body">
+                    <div class="form-row">
+                        <label for="dniEliminar">DNI:</label>
+                        <input type="text" id="dniEliminar">
+                    </div>
+                </div>
+                <div class="panel-form-actions">
+                    <button class="btn-coral" id="btnConfirmarEliminar">ELIMINAR</button>
+                    <button class="btn-limpiar" id="btnLimpiarEliminar">Limpiar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-inferior">
+            <button id="btnVolver" class="btn-coral">Volver</button>
         </div>
     </div>
     <script src="script.js"></script>
