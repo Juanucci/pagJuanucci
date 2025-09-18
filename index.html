@@ -23,6 +23,7 @@
                 <button id="btnEliminar">ELIMINAR</button>
             </div>
         </div>
+
         <div class="panel-abm" id="abmPanel">
             <!-- Panel Insertar -->
             <div id="panelInsertar" class="panel-form" style="display:none;">
@@ -49,7 +50,10 @@
                     <button class="btn-coral" id="btnConfirmarInsertar">INSERTAR</button>
                     <button class="btn-limpiar" id="btnLimpiarInsertar">Limpiar</button>
                 </div>
+                <!-- Mensaje -->
+                <div id="msgInsertar" class="msg-panel"></div>
             </div>
+
             <!-- Panel Modificar -->
             <div id="panelModificar" class="panel-form" style="display:none;">
                 <div class="panel-form-header">Modificar Cliente</div>
@@ -59,6 +63,9 @@
                         <input type="text" id="dniModificar">
                     </div>
                     <button id="btnBuscarModificar" class="btn-coral" style="margin-bottom:16px;">Buscar</button>
+                    <!-- Mensaje de búsqueda -->
+                    <div id="msgBuscarModificar" class="msg-panel"></div>
+
                     <div id="datosModificar" style="display:none;">
                         <div class="form-row">
                             <label for="nombreModificar">Nombre:</label>
@@ -76,9 +83,12 @@
                             <button class="btn-coral" id="btnConfirmarModificar">GUARDAR</button>
                             <button class="btn-limpiar" id="btnLimpiarModificar">Limpiar</button>
                         </div>
+                        <!-- Mensaje de modificación -->
+                        <div id="msgModificar" class="msg-panel"></div>
                     </div>
                 </div>
             </div>
+
             <!-- Panel Eliminar -->
             <div id="panelEliminar" class="panel-form" style="display:none;">
                 <div class="panel-form-header">Eliminar Cliente</div>
@@ -92,8 +102,11 @@
                     <button class="btn-coral" id="btnConfirmarEliminar">ELIMINAR</button>
                     <button class="btn-limpiar" id="btnLimpiarEliminar">Limpiar</button>
                 </div>
+                <!-- Mensaje -->
+                <div id="msgEliminar" class="msg-panel"></div>
             </div>
         </div>
+
         <div class="panel-inferior">
             <button id="btnVolver" class="btn-coral">Volver</button>
         </div>

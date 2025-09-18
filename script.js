@@ -1,93 +1,177 @@
+const API_BASE = "https://apipagprac20250917115600-emadhdacaxhkaphp.canadacentral-01.azurewebsites.net/api/clientes";
+
+// Paneles y botones
 function mostrarPanel(panelId) {
     document.getElementById('panelInsertar').style.display = 'none';
     document.getElementById('panelModificar').style.display = 'none';
     document.getElementById('panelEliminar').style.display = 'none';
     if (panelId) document.getElementById(panelId).style.display = 'block';
-    // Reset datosModificar panel when switching
     if (panelId !== 'panelModificar') document.getElementById('datosModificar').style.display = 'none';
 }
 
-document.getElementById('btnInsertar').onclick = function() { mostrarPanel('panelInsertar'); };
-document.getElementById('btnModificar').onclick = function() { mostrarPanel('panelModificar'); };
-document.getElementById('btnEliminar').onclick = function() { mostrarPanel('panelEliminar'); };
-document.getElementById('btnVolver').onclick = function() { 
-    mostrarPanel(''); 
+document.getElementById('btnInsertar').onclick = () => mostrarPanel('panelInsertar');
+document.getElementById('btnModificar').onclick = () => mostrarPanel('panelModificar');
+document.getElementById('btnEliminar').onclick = () => mostrarPanel('panelEliminar');
+document.getElementById('btnVolver').onclick = () => {
+    mostrarPanel('');
     document.getElementById('panelInsertar').style.display = 'none';
     document.getElementById('panelModificar').style.display = 'none';
     document.getElementById('panelEliminar').style.display = 'none';
+    limpiarMensajes();
 };
 
 // Limpiar campos
-document.getElementById('btnLimpiarInsertar').onclick = function() {
+document.getElementById('btnLimpiarInsertar').onclick = limpiarInsertar;
+document.getElementById('btnLimpiarModificar').onclick = limpiarModificar;
+document.getElementById('btnLimpiarEliminar').onclick = limpiarEliminar;
+
+function limpiarInsertar() {
     document.getElementById('dniInsertar').value = '';
     document.getElementById('nombreInsertar').value = '';
     document.getElementById('apellidoInsertar').value = '';
     document.getElementById('passwordInsertar').value = '';
-};
-document.getElementById('btnLimpiarModificar').onclick = function() {
+    document.getElementById('msgInsertar').textContent = '';
+}
+function limpiarModificar() {
     document.getElementById('dniModificar').value = '';
     document.getElementById('nombreModificar').value = '';
     document.getElementById('apellidoModificar').value = '';
     document.getElementById('passwordModificar').value = '';
     document.getElementById('datosModificar').style.display = 'none';
-};
-document.getElementById('btnLimpiarEliminar').onclick = function() {
+    document.getElementById('msgModificar').textContent = '';
+    document.getElementById('msgBuscarModificar').textContent = '';
+}
+function limpiarEliminar() {
     document.getElementById('dniEliminar').value = '';
-};
+    document.getElementById('msgEliminar').textContent = '';
+}
+function limpiarMensajes() {
+    document.getElementById('msgInsertar').textContent = '';
+    document.getElementById('msgModificar').textContent = '';
+    document.getElementById('msgBuscarModificar').textContent = '';
+    document.getElementById('msgEliminar').textContent = '';
+}
 
-// Validación y simulación de alta
-document.getElementById('btnConfirmarInsertar').onclick = function() {
-    let dni = document.getElementById('dniInsertar').value.trim();
-    let nombre = document.getElementById('nombreInsertar').value.trim();
-    let apellido = document.getElementById('apellidoInsertar').value.trim();
-    let password = document.getElementById('passwordInsertar').value.trim();
-
+// --- INSERTAR CLIENTE ---
+document.getElementById('btnConfirmarInsertar').onclick = async function() {
+    limpiarMensajes();
+    const dni = document.getElementById('dniInsertar').value.trim();
+    const nombre = document.getElementById('nombreInsertar').value.trim();
+    const apellido = document.getElementById('apellidoInsertar').value.trim();
+    const password = document.getElementById('passwordInsertar').value.trim();
+    const msg = document.getElementById('msgInsertar');
     if (!dni || !nombre || !apellido || !password) {
-        alert("Error: Debe completar todos los campos para insertar un cliente.");
+        msg.textContent = "Todos los campos son obligatorios.";
         return;
     }
-    alert("Cliente insertado (simulado): " + nombre + " " + apellido);
-    document.getElementById('btnLimpiarInsertar').click();
+    msg.textContent = "Procesando...";
+    try {
+        const res = await fetch(API_BASE, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ dni, nombre, apellido, password })
+        });
+        const text = await res.text();
+        if (res.ok) {
+            msg.textContent = text;
+            msg.className = "msg-panel success";
+            limpiarInsertar();
+        } else {
+            msg.textContent = text;
+            msg.className = "msg-panel";
+        }
+    } catch (e) {
+        msg.textContent = "Error de conexión.";
+        msg.className = "msg-panel";
+    }
 };
 
-// Validación y simulación de eliminación
-document.getElementById('btnConfirmarEliminar').onclick = function() {
-    let dni = document.getElementById('dniEliminar').value.trim();
+// --- ELIMINAR CLIENTE ---
+document.getElementById('btnConfirmarEliminar').onclick = async function() {
+    limpiarMensajes();
+    const dni = document.getElementById('dniEliminar').value.trim();
+    const msg = document.getElementById('msgEliminar');
     if (!dni) {
-        alert("Error: Debe ingresar el DNI para eliminar un cliente.");
+        msg.textContent = "Debe ingresar el DNI.";
         return;
     }
-    let confirmar = confirm("¿Está seguro que quiere eliminar el cliente con DNI " + dni + "?");
-    if (!confirmar) return;
-    alert("Cliente eliminado (simulado): " + dni);
-    document.getElementById('btnLimpiarEliminar').click();
+    if (!confirm(`¿Está seguro que quiere eliminar el cliente con DNI ${dni}?`)) return;
+    msg.textContent = "Procesando...";
+    try {
+        const res = await fetch(`${API_BASE}/${dni}`, { method: "DELETE" });
+        const text = await res.text();
+        if (res.ok) {
+            msg.textContent = text;
+            msg.className = "msg-panel success";
+            limpiarEliminar();
+        } else {
+            msg.textContent = text;
+            msg.className = "msg-panel";
+        }
+    } catch (e) {
+        msg.textContent = "Error de conexión.";
+        msg.className = "msg-panel";
+    }
 };
 
-// Modificar: Buscar y mostrar datos
-document.getElementById('btnBuscarModificar').onclick = function() {
-    let dni = document.getElementById('dniModificar').value.trim();
+// --- MODIFICAR: BUSCAR CLIENTE ---
+document.getElementById('btnBuscarModificar').onclick = async function() {
+    limpiarMensajes();
+    const dni = document.getElementById('dniModificar').value.trim();
+    const msg = document.getElementById('msgBuscarModificar');
     if (!dni) {
-        alert("Error: Debe ingresar el DNI para buscar el cliente a modificar.");
+        msg.textContent = "Debe ingresar el DNI para buscar.";
         return;
     }
-    // Simulación: muestra los datos
-    document.getElementById('datosModificar').style.display = 'block';
-    document.getElementById('nombreModificar').value = 'NombreSimulado';
-    document.getElementById('apellidoModificar').value = 'ApellidoSimulado';
-    document.getElementById('passwordModificar').value = 'PassSim';
+    msg.textContent = "Buscando cliente...";
+    try {
+        const res = await fetch(`${API_BASE}/${dni}`);
+        if (res.ok) {
+            const cliente = await res.json();
+            document.getElementById('nombreModificar').value = cliente.nombre;
+            document.getElementById('apellidoModificar').value = cliente.apellido;
+            document.getElementById('passwordModificar').value = cliente.password;
+            document.getElementById('datosModificar').style.display = 'block';
+            msg.textContent = "";
+        } else {
+            msg.textContent = "Cliente no encontrado.";
+            document.getElementById('datosModificar').style.display = 'none';
+        }
+    } catch (e) {
+        msg.textContent = "Error de conexión.";
+    }
 };
 
-// Validación y simulación de modificación
-document.getElementById('btnConfirmarModificar').onclick = function() {
-    let dni = document.getElementById('dniModificar').value.trim();
-    let nombre = document.getElementById('nombreModificar').value.trim();
-    let apellido = document.getElementById('apellidoModificar').value.trim();
-    let password = document.getElementById('passwordModificar').value.trim();
-
+// --- MODIFICAR: GUARDAR CAMBIOS ---
+document.getElementById('btnConfirmarModificar').onclick = async function() {
+    limpiarMensajes();
+    const dni = document.getElementById('dniModificar').value.trim();
+    const nombre = document.getElementById('nombreModificar').value.trim();
+    const apellido = document.getElementById('apellidoModificar').value.trim();
+    const password = document.getElementById('passwordModificar').value.trim();
+    const msg = document.getElementById('msgModificar');
     if (!dni || !nombre || !apellido || !password) {
-        alert("Error: Debe completar todos los campos para guardar la modificación.");
+        msg.textContent = "Todos los campos son obligatorios.";
         return;
     }
-    alert("Cliente modificado (simulado): " + nombre + " " + apellido);
-    document.getElementById('btnLimpiarModificar').click();
+    msg.textContent = "Procesando...";
+    try {
+        const res = await fetch(`${API_BASE}/${dni}`, {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ dni, nombre, apellido, password })
+        });
+        const text = await res.text();
+        if (res.ok) {
+            msg.textContent = text;
+            msg.className = "msg-panel success";
+            limpiarModificar();
+        } else {
+            msg.textContent = text;
+            msg.className = "msg-panel";
+        }
+    } catch (e) {
+        msg.textContent = "Error de conexión.";
+        msg.className = "msg-panel";
+    }
 };
